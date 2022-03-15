@@ -6,12 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
-@RestController("/api/socks")
+@RestController
+@RequestMapping("/api/socks")
 public class SocksController {
 
     private final SocksService socksService;
@@ -21,15 +23,40 @@ public class SocksController {
         this.socksService = socksService;
     }
 
-    @PostMapping
-    public ResponseEntity<Sock> income(@RequestBody Sock sock){
-//        socksService.saveIncome(sock);
-        return ResponseEntity.status(HttpStatus.CREATED).body(socksService.saveIncome(sock));
+    @PostMapping("/income")
+    public ResponseEntity<Sock> income(@Valid @RequestBody Sock sock){
+        return ResponseEntity.status(HttpStatus.CREATED).body(socksService.income(sock));
     }
-    @PostMapping
-    public ResponseEntity<Sock> outcome(@RequestBody Sock sock){
-//        socksService.saveIncome(sock);
-        return ResponseEntity.status(HttpStatus.CREATED).body(socksService.saveIncome(sock));
+
+    @PostMapping("/outcome")
+    public ResponseEntity<Sock> outcome(@Valid @RequestBody Sock sock){
+        //FIXME do it
+        Sock s = socksService.findSock(sock);
+
+        if (s == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(sock);
+        }
+        int qty = s.getQuantity() - sock.getQuantity();
+//        if (qty == 0)
+//            sockRepository.delete(sock);
+//        else
+        if (qty > 0)
+            s = socksService.outcome(s,qty);
+        else
+            // обработка?
+            log.error("Расход превышает остаток");
+
+        return ResponseEntity.status(HttpStatus.OK).body(s);
+    }
+
+    //api/socks?color=red&operation=moreThan&cottonPart=90
+    @GetMapping
+    public ResponseEntity<List<Sock>> socks(
+            @RequestParam String color,
+            @RequestParam("operation") String operation,
+            @RequestParam("cottonPart") int cottonPart
+    ){
+        return ResponseEntity.ok(socksService.totalSocks(color,operation,cottonPart));
     }
 
 }
