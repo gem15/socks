@@ -14,13 +14,14 @@
 package com.example.socks.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 @Data
 public class Order {
 
-	private int ID;
+	@Id private int ID;
 	
-	private Product product;
+	private Sock sock;
 	
 	private int inout;
 	

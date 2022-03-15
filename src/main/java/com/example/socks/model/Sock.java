@@ -14,17 +14,17 @@
 package com.example.socks.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 @Data
-public class Product {
-	private int ID;
+public class Sock {
+
+	@Id private int ID;
 	
 	private String color;
 	
 	private int cottonPart;
 	
 	private int quantity;
-	
-	private String sku;
-	
+
 }
