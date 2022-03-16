@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional(readOnly = true)
 @Slf4j
 @Service
 public class SocksService {
@@ -30,31 +31,49 @@ public class SocksService {
     }
 
     @Transactional
-    public Sock outcome(Sock sock,int qty) {
+    public Sock outcome(Sock sock, int qty) {
 //        Sock s = sockRepository.findByColorAndCottonPart(sock.getColor(), sock.getCottonPart());
         sockRepository.updateById(sock.getID(), qty);
         sock.setQuantity(qty);
         return sock;
     }
 
-    public List<Sock> totalSocks(String color, String operation, int cottonPart) {
+    public int sumSocks(String color, String operation, int cottonPart) {
         //moreThan, lessThan, equal
-        List<Sock> socks= new ArrayList<>();
-        switch (operation){
+        int sum = 0;
+        switch (operation) {
             case "moreThan":
-                socks = sockRepository.findAllByColorAndCottonPartGreaterThan(color,cottonPart);
+                sum = sockRepository.findByColorAndCottonPartGreaterThan(color, cottonPart);
                 break;
             case "lessThan":
-                socks = sockRepository.findAllByColorAndCottonPartLessThan(color,cottonPart);
+                sum = sockRepository.findByColorAndCottonPartLessThan(color, cottonPart);
                 break;
             case "equal":
-                socks = sockRepository.findAllByColorAndCottonPartEquals(color,cottonPart);
+                sum = sockRepository.findByColorAndCottonPartEquals(color, cottonPart);
                 break;
         }
-        return  socks;
+        return sum;
+    }
+
+    @Deprecated
+    public List<Sock> totalSocks(String color, String operation, int cottonPart) {
+        //moreThan, lessThan, equal
+        List<Sock> socks = new ArrayList<>();
+        switch (operation) {
+            case "moreThan":
+                socks = sockRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPart);
+                break;
+            case "lessThan":
+                socks = sockRepository.findAllByColorAndCottonPartLessThan(color, cottonPart);
+                break;
+            case "equal":
+                socks = sockRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
+                break;
+        }
+        return socks;
     }
 
     public Sock findSock(Sock sock) {
-        return  sockRepository.findByColorAndCottonPart(sock.getColor(), sock.getCottonPart());
+        return sockRepository.findByColorAndCottonPart(sock.getColor(), sock.getCottonPart());
     }
 }
