@@ -15,17 +15,23 @@ package com.example.socks.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.util.Date;
 
 @Data
 public class Sock {
 
 	@Id private int ID;
+	@Version private int ver;
+	@CreatedDate private Date createdDate;
 
 	@NotEmpty
 	@NotBlank
