@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SockRepository extends CrudRepository<Sock, Integer> {
 
@@ -22,12 +23,12 @@ public interface SockRepository extends CrudRepository<Sock, Integer> {
     boolean updateById(@Param("id") int id, @Param("qty") int qty);
 
     @Query("select sum(s.quantity) from sock s where  s.color = :color and s.cotton_part < :part")
-    int findByColorAndCottonPartLessThan(@Param("color") String color, @Param("part") int percent);
+    Optional<Integer> findByColorAndCottonPartLessThan(@Param("color") String color, @Param("part") int percent);
 
     @Query("select sum(s.quantity) from sock s where  s.color = :color and s.cotton_part > :part")
-    int findByColorAndCottonPartGreaterThan(@Param("color") String color, @Param("part") int percent);
+    Optional<Integer> findByColorAndCottonPartGreaterThan(@Param("color") String color, @Param("part") int percent);
 
     @Query("select sum(s.quantity) from sock s where  s.color = :color and s.cotton_part = :part")
-    int findByColorAndCottonPartEquals(@Param("color") String color, @Param("part") int percent);
+    Optional<Integer> findByColorAndCottonPartEquals(@Param("color") String color, @Param("part") int percent);
 
 }

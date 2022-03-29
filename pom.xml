@@ -10,11 +10,11 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>socks</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-latest</version>
     <name>socks</name>
     <description>Приложение для автоматизации учёта носков на складе магазина</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -61,6 +61,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

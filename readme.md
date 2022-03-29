@@ -1,3 +1,11 @@
+$ ./mvnw clean package -Dmaven.test.skip=true
+
+### Docker
+```
+docker build -t socks .
+docker run --rm -it -p 8080:8080 socks:latest
+```
+### Реализация
 * Используемая БД  PostgreSQL. Схема в файле socks.dll. Параметры подключения в файле  \socks\src\main\resources\application.properties
 ```
  spring.datasource.username=postgres
