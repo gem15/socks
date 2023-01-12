@@ -14,17 +14,16 @@
 package com.example.socks.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-import java.time.Instant;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class Sock {
@@ -41,5 +40,8 @@ public class Sock {
 
 	@Min(1)
 	private int quantity;
+
+	@MappedCollection(idColumn = "sock_id")
+	private Set<Mov> movs;
 
 }

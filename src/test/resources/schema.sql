@@ -10,10 +10,10 @@ CREATE TABLE Sock (
     UNIQUE (Color, Cotton_Part));
 
 CREATE TABLE mov (
-  ID         SERIAL NOT NULL,
-  Ver         int4,
-  created_date date,
-  sock_id int4 NOT NULL,
-  Quantity   int4 NOT NULL,
+  ID            SERIAL NOT NULL,
+  Ver           int4,
+  created_date  date,
+  Sock_id       int4 NOT NULL,
+  Quantity      int4 NOT NULL,
   PRIMARY KEY (ID));
-ALTER TABLE mov ADD CONSTRAINT FKOrder324435 FOREIGN KEY (sock_id) REFERENCES Sock (ID);
+ALTER TABLE mov ADD CONSTRAINT FKOrder324435 FOREIGN KEY (Sock_id) REFERENCES Sock (ID);

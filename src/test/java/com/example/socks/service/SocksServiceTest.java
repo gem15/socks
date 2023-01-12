@@ -10,8 +10,10 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,8 +37,10 @@ class SocksServiceTest {
 
         Mov mov = new Mov();
         mov.setQuantity(1);
-        mov.setSock(sock);
-        movRepository.save(mov);
+        Set<Mov> movSet = new HashSet<>();
+        movSet.add(mov);
+        sock.setMovs(movSet);
+        sockRepository.save(sock);
         System.out.println("stop");
 
     }
