@@ -55,6 +55,7 @@ public class SocksService implements ISocksService {
                 sum = sockRepository.findByColorAndCottonPartEquals(color, cottonPart).orElse(0);
                 break;
         }
+        log.info("Ok");
         return sum;
     }
 
